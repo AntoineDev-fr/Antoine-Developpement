@@ -242,36 +242,27 @@
             <h2 data-i18n="contact.title">Me contacter</h2>
           </header>
 
-          <form id="contact-form" class="contact-panel reveal" data-delay="120">
+          <form
+            id="contact-form"
+            class="contact-panel reveal"
+            data-delay="120"
+            method="post"
+            action="/api/contact"
+          >
+            <label class="sr-only" aria-hidden="true">
+              <span>Ne pas remplir</span>
+              <input type="text" name="company" tabindex="-1" autocomplete="off" />
+            </label>
             <div class="contact-grid">
               <label class="field">
                 <input type="text" name="name" placeholder="Nom" data-i18n-placeholder="contact.name" required />
               </label>
               <label class="field">
-                <div class="custom-select" data-placeholder="Formule">
-                  <button
-                    type="button"
-                    class="custom-select__trigger"
-                    aria-haspopup="listbox"
-                    aria-expanded="false"
-                    data-i18n="contact.package"
-                  >
-                    Formule
-                  </button>
-                  <ul class="custom-select__options" role="listbox">
-                    <li role="option" data-value="one-shot" data-i18n="contact.option.oneShot">One shot</li>
-                    <li role="option" data-value="pro" data-i18n="contact.option.pro">Pro</li>
-                    <li role="option" data-value="premium" data-i18n="contact.option.premium">Premium</li>
-                  </ul>
-                  <input type="hidden" name="formule" required />
-                </div>
-              </label>
-              <label class="field">
                 <input
-                  type="text"
-                  name="sector"
-                  placeholder="Secteur d&#39;activit&eacute;"
-                  data-i18n-placeholder="contact.sector"
+                  type="email"
+                  name="email"
+                  placeholder="Adresse mail"
+                  data-i18n-placeholder="contact.email"
                   required
                 />
               </label>
@@ -284,25 +275,9 @@
                   required
                 ></textarea>
               </label>
-              <label class="field">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Adresse mail"
-                  data-i18n-placeholder="contact.email"
-                  required
-                />
-              </label>
-              <label class="field">
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="T&eacute;l&eacute;phone"
-                  data-i18n-placeholder="contact.phone"
-                />
-              </label>
             </div>
             <button type="submit" class="btn btn-contact" data-i18n="contact.submit">Envoyer</button>
+            <p id="form-status" class="muted" aria-live="polite"></p>
           </form>
         </div>
       </section>
@@ -337,10 +312,6 @@
       </button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>
-      emailjs.init("ZQvxpL78sIFO13INf");
-    </script>
     <script src="script.js"></script>
 
   </body>

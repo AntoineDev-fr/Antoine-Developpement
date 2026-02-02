@@ -134,6 +134,10 @@ const translations = {
     "contact.option.pro": "Pro",
     "contact.option.premium": "Premium",
     "contact.submit": "Envoyer",
+    "contact.sending": "Envoi...",
+    "contact.success": "Message envoyé avec succès.",
+    "contact.error": "Erreur lors de l'envoi. Réessayez.",
+    "contact.validation": "Merci de remplir tous les champs correctement.",
     "legal.title": "Mentions légales",
     "legal.subtitle": "Informations obligatoires concernant l’éditeur du site et l’hébergeur.",
     "legal.content": `
@@ -169,7 +173,7 @@ const translations = {
     "privacy.content": `
       <p>
         <strong>Données collectées</strong><br />
-        Nom, email, téléphone, secteur d’activité et message transmis via le formulaire.
+        Nom, email et message transmis via le formulaire.
       </p>
       <p>
         <strong>Finalités</strong><br />
@@ -185,8 +189,7 @@ const translations = {
       </p>
       <p>
         <strong>Destinataires</strong><br />
-        Données accessibles uniquement à l’éditeur. Le formulaire est envoyé via un prestataire d’emailing
-        (EmailJS ou service équivalent).
+        Données accessibles uniquement à l’éditeur. Le formulaire est envoyé via un serveur mail (SMTP).
       </p>
       <p>
         <strong>Vos droits</strong><br />
@@ -290,6 +293,10 @@ const translations = {
     "contact.option.pro": "Pro",
     "contact.option.premium": "Premium",
     "contact.submit": "Send",
+    "contact.sending": "Sending...",
+    "contact.success": "Message sent successfully.",
+    "contact.error": "Error sending the message. Please try again.",
+    "contact.validation": "Please complete all fields correctly.",
     "legal.title": "Legal notice",
     "legal.subtitle": "Mandatory information about the site publisher and hosting provider.",
     "legal.content": `
@@ -325,7 +332,7 @@ const translations = {
     "privacy.content": `
       <p>
         <strong>Data collected</strong><br />
-        Name, email, phone, industry, and the message sent via the form.
+        Name, email, and the message sent via the form.
       </p>
       <p>
         <strong>Purposes</strong><br />
@@ -341,7 +348,7 @@ const translations = {
       </p>
       <p>
         <strong>Recipients</strong><br />
-        Data is accessible only to the publisher. The form is sent via an emailing provider (EmailJS or equivalent).
+        Data is accessible only to the publisher. The form is sent via an SMTP mail server.
       </p>
       <p>
         <strong>Your rights</strong><br />
@@ -412,26 +419,6 @@ const applyTranslations = (lang) => {
     if (dict[key]) el.setAttribute("aria-label", dict[key]);
   });
 
-  document.querySelectorAll(".custom-select").forEach((select) => {
-    const trigger = select.querySelector(".custom-select__trigger");
-    const hidden = select.querySelector("input[type='hidden']");
-    const options = select.querySelectorAll("[role='option']");
-    if (!trigger || !hidden) return;
-    if (hidden.value) {
-      const selected = Array.from(options).find((opt) => opt.dataset.value === hidden.value);
-      if (selected) {
-        trigger.textContent = selected.textContent || "";
-        trigger.style.color = "var(--text-primary)";
-      }
-    } else {
-      const key = trigger.dataset.i18n;
-      if (dict[key]) {
-        trigger.textContent = dict[key];
-        trigger.style.color = "var(--text-secondary)";
-      }
-    }
-  });
-
   if (dict["pricing.featured"]) {
     root.style.setProperty("--pricing-featured-label", `"${dict["pricing.featured"]}"`);
   }
@@ -465,53 +452,6 @@ if (prefersReduced) {
   });
 }
 
-// Custom select
-const customSelects = document.querySelectorAll(".custom-select");
-
-const closeAllSelects = (except) => {
-  customSelects.forEach((select) => {
-    if (select !== except) {
-      select.classList.remove("is-open");
-      const trigger = select.querySelector(".custom-select__trigger");
-      if (trigger) trigger.setAttribute("aria-expanded", "false");
-    }
-  });
-};
-
-customSelects.forEach((select) => {
-  const trigger = select.querySelector(".custom-select__trigger");
-  const options = select.querySelector(".custom-select__options");
-  const hidden = select.querySelector("input[type='hidden']");
-
-  if (!trigger || !options || !hidden) return;
-
-  trigger.addEventListener("click", () => {
-    const isOpen = select.classList.toggle("is-open");
-    trigger.setAttribute("aria-expanded", String(isOpen));
-    if (isOpen) closeAllSelects(select);
-  });
-
-  options.addEventListener("click", (event) => {
-    const option = event.target.closest("[role='option']");
-    if (!option) return;
-    const value = option.dataset.value || "";
-    hidden.value = value;
-    trigger.textContent = option.textContent || "";
-    trigger.style.color = "var(--text-primary)";
-    options.querySelectorAll("[role='option']").forEach((item) => {
-      item.setAttribute("aria-selected", item === option ? "true" : "false");
-    });
-    select.classList.remove("is-open");
-    trigger.setAttribute("aria-expanded", "false");
-  });
-});
-
-document.addEventListener("click", (event) => {
-  if (!event.target.closest(".custom-select")) {
-    closeAllSelects();
-  }
-});
-
 if (themeToggle) {
   themeToggle.addEventListener("click", () => {
     const isLight = root.getAttribute("data-theme") === "light";
@@ -534,97 +474,90 @@ if (langToggle) {
 }
 
 
-// 3) script.js : envoi EmailJS + gestion custom-select + status
-
-const SERVICE_ID = "service_1mpn38f";
-const TEMPLATE_ID = "template_y80wwgb";
-
 const form = document.getElementById("contact-form");
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-if (form) {
-  // (optionnel) zone status
+const getStatusMessages = () => ({
+  sending: translate("contact.sending") || "Envoi...",
+  success: translate("contact.success") || "Message envoyé avec succès.",
+  error: translate("contact.error") || "Erreur lors de l'envoi. Réessayez.",
+  validation: translate("contact.validation") || "Merci de remplir tous les champs correctement.",
+});
+
+const ensureStatusEl = (targetForm) => {
   let statusEl = document.getElementById("form-status");
   if (!statusEl) {
     statusEl = document.createElement("p");
     statusEl.id = "form-status";
     statusEl.style.marginTop = "12px";
-    form.appendChild(statusEl);
+    statusEl.setAttribute("aria-live", "polite");
+    targetForm.appendChild(statusEl);
   }
+  return statusEl;
+};
 
-  function setStatus(msg, ok = true) {
-    statusEl.textContent = msg;
-    statusEl.style.color = ok ? "green" : "red";
-  }
+const setStatus = (statusEl, msg, ok = true) => {
+  statusEl.textContent = msg;
+  statusEl.style.color = ok ? "green" : "red";
+};
 
-// --- Custom select -> remplit l'input hidden name="formule" ---
-const select = document.querySelector(".custom-select");
-if (select) {
-  const trigger = select.querySelector(".custom-select__trigger");
-  const options = select.querySelector(".custom-select__options");
-  const hidden = select.querySelector('input[type="hidden"][name="formule"]');
+if (form) {
+  const statusEl = ensureStatusEl(form);
+  const submitBtn = form.querySelector('button[type="submit"]');
 
-  // toggle open
-  trigger.addEventListener("click", () => {
-    const expanded = trigger.getAttribute("aria-expanded") === "true";
-    trigger.setAttribute("aria-expanded", String(!expanded));
-    options.style.display = expanded ? "none" : "block";
-  });
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  // select option
-  options.querySelectorAll('[role="option"]').forEach((opt) => {
-    opt.addEventListener("click", () => {
-      const value = opt.getAttribute("data-value") || opt.textContent.trim();
-      hidden.value = value;
-      trigger.textContent = opt.textContent.trim();
-      trigger.setAttribute("aria-expanded", "false");
-      options.style.display = "none";
-    });
-  });
+    const formData = new FormData(form);
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+    const company = String(formData.get("company") || "").trim();
+    const statusMessages = getStatusMessages();
 
-  // close on outside click
-  document.addEventListener("click", (e) => {
-    if (!select.contains(e.target)) {
-      trigger.setAttribute("aria-expanded", "false");
-      options.style.display = "none";
-    }
-  });
-}
-
-  // --- Envoi EmailJS ---
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    // Sécurité: s'assurer que la formule est bien choisie
-    const formule = form.querySelector('input[name="formule"]');
-    if (formule && !formule.value) {
-      setStatus("Veuillez sélectionner une formule.", false);
+    if (!name || !email || !message || !emailPattern.test(email)) {
+      setStatus(statusEl, statusMessages.validation, false);
       return;
     }
 
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const oldText = submitBtn.textContent;
+    if (company) {
+      setStatus(statusEl, statusMessages.success, true);
+      form.reset();
+      return;
+    }
+
+    const payload = { name, email, message, company };
+    const previousLabel = submitBtn ? submitBtn.textContent : "";
 
     try {
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Envoi...";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = statusMessages.sending;
+      }
+      setStatus(statusEl, statusMessages.sending, true);
 
-      if (!window.emailjs) {
-        throw new Error("EmailJS indisponible");
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok !== true) {
+        throw new Error(data.error || "REQUEST_FAILED");
       }
 
-      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form);
-
-      setStatus("Message envoyé avec succès.", true);
+      setStatus(statusEl, statusMessages.success, true);
       form.reset();
-
-      // reset custom select text si besoin
-      const trigger = document.querySelector(".custom-select__trigger");
-      if (trigger) trigger.textContent = "Formule";
-    } catch (err) {
-      setStatus("Erreur lors de l'envoi. Réessayez.", false);
+    } catch (error) {
+      setStatus(statusEl, statusMessages.error, false);
     } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = oldText;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = previousLabel || translate("contact.submit") || "Envoyer";
+      }
     }
   });
 }

@@ -1,0 +1,17 @@
+[Unit]
+Description=Contact API
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/antoine-dev/server
+EnvironmentFile=/var/www/antoine-dev/server/.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node /var/www/antoine-dev/server/server.js
+Restart=always
+RestartSec=5
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target

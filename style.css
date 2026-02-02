@@ -790,7 +790,7 @@ textarea {
 }
 
 .field--message {
-  grid-row: span 3;
+  grid-column: 1 / -1;
 }
 
 .custom-select {
