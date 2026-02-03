@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Axis | Mentions l&eacute;gales</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="page-legal">
+    <header class="site-header" id="top">
+      <nav class="navbar" aria-label="Navigation principale" data-i18n-aria="nav.aria">
+        <a class="brand" href="index.html#hero">
+          <img src="assets/logo.png" alt="Logo Axis" />
+          <span>Antoine développement</span>
+        </a>
+
+        <div class="nav-menu" id="primary-nav">
+          <div class="nav-links">
+            <a href="index.html#qui-suis-je" data-i18n="nav.about">Qui-suis je ?</a>
+            <a href="index.html#services" data-i18n="nav.services">Services</a>
+            <a href="index.html#realisations" data-i18n="nav.projects">R&eacute;alisations</a>
+            <a href="index.html#parcours-projet" data-i18n="nav.process">Processus</a>
+          </div>
+          <div class="nav-actions">
+            <a class="btn btn-contact" href="index.html#contact" data-i18n="nav.contact">Contact</a>
+          </div>
+        </div>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-controls="primary-nav"
+          aria-expanded="false"
+          aria-label="Ouvrir le menu"
+          data-i18n-aria="nav.toggle"
+        >
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="mentions-legales" class="section legal">
+        <div class="container">
+          <header class="section-header reveal" data-delay="80">
+            <h2 data-i18n="legal.title">Mentions l&eacute;gales</h2>
+            <p class="muted" data-i18n="legal.subtitle">
+              Informations obligatoires concernant l&#39;&eacute;diteur du site et l&#39;h&eacute;bergeur.
+            </p>
+          </header>
+          <div class="legal-card reveal" data-delay="140">
+            <div class="legal-content" data-i18n-html="legal.content">
+              <p>
+                <strong>&Eacute;diteur du site</strong><br />
+                Antoine développement — [Nom &amp; pr&eacute;nom / Raison sociale]<br />
+                Statut : [auto-entrepreneur / soci&eacute;t&eacute;]<br />
+                Adresse : [adresse compl&egrave;te]<br />
+                SIRET : [SIRET]<br />
+                Email : [email] &bull; T&eacute;l&eacute;phone : [t&eacute;l&eacute;phone]
+              </p>
+              <p>
+                <strong>Directeur de la publication</strong><br />
+                [Nom &amp; pr&eacute;nom]
+              </p>
+              <p>
+                <strong>H&eacute;bergement</strong><br />
+                [Nom de l&#39;h&eacute;bergeur] — [adresse] — [t&eacute;l&eacute;phone]
+              </p>
+              <p>
+                <strong>Propri&eacute;t&eacute; intellectuelle</strong><br />
+                L&#39;ensemble des contenus (textes, visuels, logos, maquettes) est prot&eacute;g&eacute; par le droit
+                d&#39;auteur. Toute reproduction, distribution ou utilisation sans autorisation est interdite.
+              </p>
+              <p>
+                <strong>Responsabilit&eacute;</strong><br />
+                L&#39;&eacute;diteur ne saurait &ecirc;tre tenu responsable des dommages li&eacute;s &agrave; l&#39;usage du site
+                ou &agrave; l&#39;indisponibilit&eacute; temporaire des services.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div class="footer-brand reveal" data-delay="80">
+          <img src="assets/logo.png" alt="Logo Axis" />
+          <div>
+            <strong>Antoine d&eacute;velopement</strong>
+            <span class="muted" data-i18n="footer.tagline">Sites web sur-mesure pour ind&eacute;pendants.</span>
+          </div>
+        </div>
+        <div class="footer-links reveal" data-delay="140">
+          <a href="mentions-legales.html" data-i18n="footer.legal">Mentions l&eacute;gales</a>
+          <a href="politique-confidentialite.html" data-i18n="footer.privacy">Politique de confidentialit&eacute;</a>
+        </div>
+        <div class="footer-copy muted reveal" data-delay="200" data-i18n="footer.copy">
+          &copy; 2026 Axis. Tous droits r&eacute;serv&eacute;s.
+        </div>
+      </div>
+    </footer>
+
+    <div class="floating-controls">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+        Mode clair
+      </button>
+      <button class="lang-toggle" type="button" data-lang-toggle aria-pressed="false">
+        EN
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

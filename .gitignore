@@ -2,3 +2,14 @@
 server/node_modules/
 server/.env
 .env
+
+# Logs
+*.log
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Examples / backups
+*.example

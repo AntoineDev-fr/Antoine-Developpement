@@ -1,0 +1,355 @@
+﻿<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Antoine Développement | Sites web</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header" id="top">
+      <nav class="navbar" aria-label="Navigation principale" data-i18n-aria="nav.aria">
+        <a class="brand" href="#hero">
+          <img src="assets/logo.png" alt="Logo Axis" />
+          <span>Antoine développement</span>
+        </a>
+
+        <div class="nav-menu" id="primary-nav">
+          <div class="nav-links">
+            <a href="#qui-suis-je" data-i18n="nav.about">Qui-suis je ?</a>
+            <a href="#services" data-i18n="nav.services">Services</a>
+            <a href="#realisations" data-i18n="nav.projects">R&eacute;alisations</a>
+            <a href="#parcours-projet" data-i18n="nav.process">Processus</a>
+          </div>
+          <div class="nav-actions">
+            <a class="btn btn-contact" href="#contact" data-i18n="nav.contact">Contact</a>
+          </div>
+        </div>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-controls="primary-nav"
+          aria-expanded="false"
+          aria-label="Ouvrir le menu"
+          data-i18n-aria="nav.toggle"
+        >
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="hero" aria-labelledby="hero-title">
+        <div class="hero-content container">
+          <h1 id="hero-title" class="reveal" data-delay="0" data-i18n-html="hero.title">
+            Sites web pour ind&eacute;pendants <br> et commerces de proximit&eacute;
+          </h1>
+
+          <div class="hero-badges">
+            <button type="button" class="feature-badge reveal" data-delay="120" data-i18n="hero.badge.clear">
+              Clairs
+            </button>
+            <button type="button" class="feature-badge reveal" data-delay="220" data-i18n="hero.badge.functional">
+              Fonctionnels
+            </button>
+            <button type="button" class="feature-badge reveal" data-delay="320" data-i18n="hero.badge.responsive">
+              Responsives
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="qui-suis-je" class="section about">
+        <div class="container">
+          <div class="about-card reveal" data-delay="100">
+            <div class="about-text">
+              <p class="about-lead" data-i18n-html="about.lead">
+                Je m&#39;appelle Antoine, d&eacute;veloppeur web.<br />
+                J&#39;aide les ind&eacute;pendants et commerces de proximit&eacute;<br />
+                &agrave; avoir un site clair, professionnel et facile &agrave; contacter.
+              </p>
+              <p class="about-secondary" data-i18n-html="about.secondary">
+                Pas de jargon technique, pas de site inutile.<br />
+                Juste l&#39;essentiel pour pr&eacute;senter votre activit&eacute;<br />
+                et recevoir des appels ou des demandes de devis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section services">
+        <div class="container">
+          <header class="section-header reveal" data-delay="80">
+            <h2 data-i18n="services.title">Services et tarifs</h2>
+          </header>
+
+          <div class="pricing-grid">
+            <article class="pricing-card reveal" data-delay="120">
+              <h3 data-i18n="pricing.standard.title">299€ - One shot</h3>
+              <p class="pricing-sub muted" data-i18n="pricing.standard.desc">
+                Idéal pour lancer votre présence en ligne.
+              </p>
+              <ul>
+                <li data-i18n="pricing.standard.li1">1 page sur-mesure (landing page)</li>
+                <li data-i18n="pricing.standard.li2">Design clair et branding cohérent</li>
+                <li data-i18n="pricing.standard.li3">Responsive mobile/tablette</li>
+                <li data-i18n="pricing.standard.li4">Formulaire de contact</li>
+                <li data-i18n="pricing.standard.li5">Mise en ligne incluse</li>
+                <li data-i18n="pricing.standard.li6">Support 7 jours</li>
+              </ul>
+            </article>
+
+            <article class="pricing-card pricing-card--featured reveal" data-delay="180">
+              <h3 data-i18n="pricing.pro.title">790€ - Pro</h3>
+              <p class="pricing-sub muted" data-i18n="pricing.pro.desc">
+                Le choix le plus équilibré pour convertir.
+              </p>
+              <ul>
+                <li data-i18n="pricing.pro.li1">3 &agrave; 5 pages strat&eacute;giques</li>
+                <li data-i18n="pricing.pro.li2">Design premium + animations l&eacute;g&egrave;res</li>
+                <li data-i18n="pricing.pro.li3">Responsive + optimisation vitesse</li>
+                <li data-i18n="pricing.pro.li4">Formulaire &amp; appels &agrave; l&#39;action avanc&eacute;s</li>
+                <li data-i18n="pricing.pro.li5">SEO local basique</li>
+                <li data-i18n="pricing.pro.li6">Mise en ligne incluse</li>
+              </ul>
+            </article>
+
+            <article class="pricing-card reveal" data-delay="240">
+              <h3 data-i18n="pricing.premium.title">990€ - Premium</h3>
+              <p class="pricing-sub muted" data-i18n="pricing.premium.desc">
+                Pour une image forte et des contenus riches.
+              </p>
+              <ul>
+                <li data-i18n="pricing.premium.li1">5 &agrave; 8 pages compl&egrave;tes</li>
+                <li data-i18n="pricing.premium.li2">Identit&eacute; visuelle plus pouss&eacute;e</li>
+                <li data-i18n="pricing.premium.li3">Animations plus travaill&eacute;es</li>
+                <li data-i18n="pricing.premium.li4">SEO local avanc&eacute;</li>
+                <li data-i18n="pricing.premium.li5">Formulaire + tunnel de contact</li>
+                <li data-i18n="pricing.premium.li6">Mise en ligne incluse</li>
+                <li data-i18n="pricing.premium.li7">Base de donn&eacute;es / contenu dynamique</li>
+              </ul>
+            </article>
+          </div>
+
+          <p class="pricing-note reveal" data-delay="260" data-i18n="pricing.note">
+            *Ces formules donnent un cadre, mais rien n&#39;est fig&eacute; : chaque projet peut &ecirc;tre ajust&eacute;.
+          </p>
+        </div>
+      </section>
+
+      <section id="realisations" class="section realizations">
+        <div class="container">
+          <header class="section-header reveal" data-delay="80">
+            <h2 data-i18n="projects.title">R&eacute;alisations</h2>
+            <p class="muted" data-i18n="projects.subtitle">
+              Quelques projets r&eacute;cents pour des commerces locaux.
+            </p>
+          </header>
+
+          <div class="project-list">
+            <a
+              class="project-item reveal"
+              data-delay="140"
+              href="https://boucherie-limare.com"
+              target="_blank"
+              rel="noopener"
+            >
+              <div class="project-media">
+                <img src="assets/boucherie.png" alt="Projet boucherie artisanale" />
+              </div>
+              <div class="project-info">
+                <span class="project-label" data-i18n="projects.item1.label">Site vitrine</span>
+                <h3 data-i18n="projects.item1.title">Boucherie artisanale</h3>
+                <p class="muted" data-i18n="projects.item1.desc">
+                  Univers chaleureux, parcours simplifi&eacute; et appel &agrave; l&#39;action clair.
+                </p>
+                <ul class="project-tags">
+                  <li data-i18n="projects.item1.tag1">UI/UX</li>
+                  <li data-i18n="projects.item1.tag2">Conversion</li>
+                  <li data-i18n="projects.item1.tag3">Mobile-first</li>
+                </ul>
+                <span class="project-cta" data-i18n="projects.cta">Voir le site &rarr;</span>
+              </div>
+            </a>
+            <a
+              class="project-item reveal"
+              data-delay="220"
+              href="https://antoine-limare-portfolio.com/"
+              target="_blank"
+              rel="noopener"
+            >
+              <div class="project-media">
+                <img src="assets/portfolio.png" alt="Projet portfolio cr&eacute;atif" />
+              </div>
+              <div class="project-info">
+                <span class="project-label" data-i18n="projects.item2.label">Portfolio</span>
+                <h3 data-i18n="projects.item2.title">Portfolio cr&eacute;atif</h3>
+                <p class="muted" data-i18n="projects.item2.desc">
+                  Mise en avant des r&eacute;alisations avec un design &eacute;pur&eacute; et impactant.
+                </p>
+                <ul class="project-tags">
+                  <li data-i18n="projects.item2.tag1">Branding</li>
+                  <li data-i18n="projects.item2.tag2">UI polish</li>
+                  <li data-i18n="projects.item2.tag3">Animation</li>
+                </ul>
+                <span class="project-cta" data-i18n="projects.cta">Voir le site &rarr;</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="parcours-projet" class="section process">
+        <div class="container">
+          <div class="process-card reveal" data-delay="120">
+            <div class="process-left">
+              <h2 data-i18n="process.title">Le parcours d&#39;un projet</h2>
+              <p class="muted" data-i18n="process.desc">
+                Chaque projet suit un processus clair, de l&#39;&eacute;change initial &agrave; la
+                mise en ligne, afin de garantir un site simple, efficace et adapt&eacute; &agrave;
+                vos besoins.
+              </p>
+              <a class="btn btn-contact process-cta" href="#contact" data-i18n="process.cta">
+                D&eacute;marrer un projet
+              </a>
+            </div>
+            <div class="process-right">
+              <ul class="process-steps">
+                <li data-i18n="process.step1">Premier contact</li>
+                <li data-i18n="process.step2">Cr&eacute;ation de la maquette</li>
+                <li data-i18n="process.step3">D&eacute;veloppement du site</li>
+                <li data-i18n="process.step4">Mise en production</li>
+                <li data-i18n="process.step5">H&eacute;bergement et maintenance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact">
+        <div class="container">
+          <header class="section-header reveal" data-delay="80">
+            <h2 data-i18n="contact.title">Me contacter</h2>
+          </header>
+
+          <form
+            id="contact-form"
+            class="contact-panel reveal"
+            data-delay="120"
+            method="post"
+            action="/api/contact"
+          >
+            <label class="sr-only" aria-hidden="true">
+              <span>Ne pas remplir</span>
+              <input type="text" name="company" tabindex="-1" autocomplete="off" />
+            </label>
+            <div class="contact-grid">
+              <label class="field">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Nom"
+                  data-i18n-placeholder="contact.name"
+                  autocomplete="name"
+                  required
+                />
+              </label>
+              <label class="field">
+                <input
+                  type="text"
+                  name="sector"
+                  placeholder="Secteur d'activit&eacute;"
+                  data-i18n-placeholder="contact.sector"
+                  required
+                />
+              </label>
+              <label class="field">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Adresse mail"
+                  data-i18n-placeholder="contact.email"
+                  autocomplete="email"
+                  required
+                />
+              </label>
+              <label class="field">
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="T&eacute;l&eacute;phone"
+                  data-i18n-placeholder="contact.phone"
+                  autocomplete="tel"
+                  required
+                />
+              </label>
+              <label class="field field--full">
+                <select name="package" required data-i18n-aria="contact.package" aria-label="Formule">
+                  <option value="" disabled selected data-i18n="contact.package">Formule</option>
+                  <option value="one-shot" data-i18n="contact.option.oneShot">One shot</option>
+                  <option value="pro" data-i18n="contact.option.pro">Pro</option>
+                  <option value="premium" data-i18n="contact.option.premium">Premium</option>
+                </select>
+              </label>
+              <label class="field field--message">
+                <textarea
+                  name="message"
+                  rows="6"
+                  placeholder="D&eacute;crivez votre projet..."
+                  data-i18n-placeholder="contact.message"
+                  required
+                ></textarea>
+              </label>
+            </div>
+            <button type="submit" class="btn btn-contact" data-i18n="contact.submit">Envoyer</button>
+            <p id="form-status" class="muted" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div class="footer-brand reveal" data-delay="80">
+          <img src="assets/logo.png" alt="Logo Axis" />
+          <div>
+            <strong>Antoine dévelopement</strong>
+            <span class="muted" data-i18n="footer.tagline">Sites web sur-mesure pour ind&eacute;pendants.</span>
+          </div>
+        </div>
+        <div class="footer-links reveal" data-delay="140">
+          <a href="mentions-legales.html" data-i18n="footer.legal">Mentions l&eacute;gales</a>
+          <a href="politique-confidentialite.html" data-i18n="footer.privacy">Politique de confidentialit&eacute;</a>
+        </div>
+        <div class="footer-copy muted reveal" data-delay="200" data-i18n="footer.copy">
+          © 2026 Axis. Tous droits r&eacute;serv&eacute;s.
+        </div>
+      </div>
+    </footer>
+
+    <div class="floating-controls">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+        Mode clair
+      </button>
+      <button class="lang-toggle" type="button" data-lang-toggle aria-pressed="false">
+        EN
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+
+  </body>
+</html>
+
+<!-- deploy trigger 2026-02-02T13:08:40 -->
