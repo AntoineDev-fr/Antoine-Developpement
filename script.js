@@ -501,6 +501,13 @@ const setStatus = (statusEl, msg, ok = true) => {
   statusEl.style.color = ok ? "green" : "red";
 };
 
+const apiBase = (() => {
+  if (window.location.port === "5500") {
+    return `http://${window.location.hostname}:3000`;
+  }
+  return "";
+})();
+
 if (form) {
   const statusEl = ensureStatusEl(form);
   const submitBtn = form.querySelector('button[type="submit"]');
@@ -552,7 +559,7 @@ if (form) {
       }
       setStatus(statusEl, statusMessages.sending, true);
 
-      const response = await fetch("/api/contact", {
+      const response = await fetch(`${apiBase}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
