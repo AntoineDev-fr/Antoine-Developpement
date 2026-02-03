@@ -71,7 +71,10 @@ app.post("/api/contact", async (req, res) => {
   }
 
   const name = String(req.body?.name || "").trim();
+  const sector = String(req.body?.sector || "").trim();
   const email = String(req.body?.email || "").trim();
+  const phone = String(req.body?.phone || "").trim();
+  const packageChoice = String(req.body?.package || "").trim();
   const message = String(req.body?.message || "").trim();
   const company = String(req.body?.company || "").trim();
 
@@ -79,11 +82,25 @@ app.post("/api/contact", async (req, res) => {
     return res.status(200).json({ ok: true });
   }
 
-  if (!name || !email || !message || !emailPattern.test(email)) {
+  if (
+    !name ||
+    !sector ||
+    !email ||
+    !phone ||
+    !packageChoice ||
+    !message ||
+    !emailPattern.test(email)
+  ) {
     return res.status(400).json({ ok: false, error: "VALIDATION" });
   }
 
-  if (name.length > MAX_NAME_LENGTH || message.length > MAX_MESSAGE_LENGTH) {
+  if (
+    name.length > MAX_NAME_LENGTH ||
+    sector.length > MAX_NAME_LENGTH ||
+    phone.length > MAX_NAME_LENGTH ||
+    packageChoice.length > MAX_NAME_LENGTH ||
+    message.length > MAX_MESSAGE_LENGTH
+  ) {
     return res.status(400).json({ ok: false, error: "VALIDATION" });
   }
 
@@ -94,7 +111,10 @@ app.post("/api/contact", async (req, res) => {
   const subject = `${subjectPrefix} - ${name}`;
   const text = [
     `Name: ${name}`,
+    `Sector: ${sector}`,
     `Email: ${email}`,
+    `Phone: ${phone}`,
+    `Package: ${packageChoice}`,
     `IP: ${ip}`,
     "",
     message,

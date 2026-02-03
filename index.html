@@ -255,7 +255,23 @@
             </label>
             <div class="contact-grid">
               <label class="field">
-                <input type="text" name="name" placeholder="Nom" data-i18n-placeholder="contact.name" required />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Nom"
+                  data-i18n-placeholder="contact.name"
+                  autocomplete="name"
+                  required
+                />
+              </label>
+              <label class="field">
+                <input
+                  type="text"
+                  name="sector"
+                  placeholder="Secteur d'activit&eacute;"
+                  data-i18n-placeholder="contact.sector"
+                  required
+                />
               </label>
               <label class="field">
                 <input
@@ -263,8 +279,27 @@
                   name="email"
                   placeholder="Adresse mail"
                   data-i18n-placeholder="contact.email"
+                  autocomplete="email"
                   required
                 />
+              </label>
+              <label class="field">
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="T&eacute;l&eacute;phone"
+                  data-i18n-placeholder="contact.phone"
+                  autocomplete="tel"
+                  required
+                />
+              </label>
+              <label class="field field--full">
+                <select name="package" required data-i18n-aria="contact.package" aria-label="Formule">
+                  <option value="" disabled selected data-i18n="contact.package">Formule</option>
+                  <option value="one-shot" data-i18n="contact.option.oneShot">One shot</option>
+                  <option value="pro" data-i18n="contact.option.pro">Pro</option>
+                  <option value="premium" data-i18n="contact.option.premium">Premium</option>
+                </select>
               </label>
               <label class="field field--message">
                 <textarea

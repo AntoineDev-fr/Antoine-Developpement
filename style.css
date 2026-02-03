@@ -762,7 +762,8 @@ textarea {
 }
 
 .field input,
-.field textarea {
+.field textarea,
+.field select {
   background: rgba(245, 245, 245, 0.08);
   border: 1px solid rgba(245, 245, 245, 0.35);
   border-radius: 8px;
@@ -776,6 +777,10 @@ textarea {
   resize: vertical;
 }
 
+.field select:invalid {
+  color: rgba(245, 245, 245, 0.55);
+}
+
 .field input::placeholder,
 .field textarea::placeholder {
   color: rgba(245, 245, 245, 0.55);
@@ -783,10 +788,15 @@ textarea {
 
 .field input:focus,
 .field textarea:focus,
+.field select:focus,
 .custom-select__trigger:focus {
   outline: none;
   border-color: var(--red-primary);
   box-shadow: 0 0 0 2px rgba(177, 18, 38, 0.2);
+}
+
+.field--full {
+  grid-column: 1 / -1;
 }
 
 .field--message {
@@ -863,6 +873,7 @@ textarea {
 
 [data-theme="light"] .field input,
 [data-theme="light"] .field textarea,
+[data-theme="light"] .field select,
 [data-theme="light"] .custom-select__trigger {
   background: var(--field-bg);
   border-color: var(--field-border);
@@ -877,6 +888,10 @@ textarea {
 
 [data-theme="light"] .field input::placeholder,
 [data-theme="light"] .field textarea::placeholder {
+  color: var(--field-placeholder);
+}
+
+[data-theme="light"] .field select:invalid {
   color: var(--field-placeholder);
 }
 

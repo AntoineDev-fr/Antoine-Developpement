@@ -173,7 +173,7 @@ const translations = {
     "privacy.content": `
       <p>
         <strong>Données collectées</strong><br />
-        Nom, email et message transmis via le formulaire.
+        Nom, email, téléphone, secteur d'activité, formule choisie et message transmis via le formulaire.
       </p>
       <p>
         <strong>Finalités</strong><br />
@@ -332,7 +332,7 @@ const translations = {
     "privacy.content": `
       <p>
         <strong>Data collected</strong><br />
-        Name, email, and the message sent via the form.
+        Name, email, phone, industry, selected package, and the message sent via the form.
       </p>
       <p>
         <strong>Purposes</strong><br />
@@ -510,12 +510,20 @@ if (form) {
 
     const formData = new FormData(form);
     const name = String(formData.get("name") || "").trim();
+    const sector = String(formData.get("sector") || "").trim();
     const email = String(formData.get("email") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    const packageValue = String(formData.get("package") || "").trim();
     const message = String(formData.get("message") || "").trim();
     const company = String(formData.get("company") || "").trim();
     const statusMessages = getStatusMessages();
+    const packageSelect = form.querySelector('select[name="package"]');
+    const packageLabel =
+      packageSelect && packageSelect.selectedIndex >= 0
+        ? packageSelect.options[packageSelect.selectedIndex].textContent.trim()
+        : packageValue;
 
-    if (!name || !email || !message || !emailPattern.test(email)) {
+    if (!name || !sector || !email || !phone || !packageValue || !message || !emailPattern.test(email)) {
       setStatus(statusEl, statusMessages.validation, false);
       return;
     }
@@ -526,7 +534,15 @@ if (form) {
       return;
     }
 
-    const payload = { name, email, message, company };
+    const payload = {
+      name,
+      sector,
+      email,
+      phone,
+      package: packageLabel || packageValue,
+      message,
+      company,
+    };
     const previousLabel = submitBtn ? submitBtn.textContent : "";
 
     try {
