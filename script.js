@@ -211,7 +211,7 @@ const translations = {
     "lang.switchToFr": "Passer en français",
   },
   en: {
-    "page.title": "Axis | Websites for independent professionals",
+    "page.title": "Antoine developpement | Websites for independent professionals",
     "nav.aria": "Main navigation",
     "nav.toggle": "Open menu",
     "nav.about": "About",
