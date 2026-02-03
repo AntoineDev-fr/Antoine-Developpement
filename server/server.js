@@ -139,7 +139,7 @@ setInterval(() => {
   }
 }, RATE_LIMIT_WINDOW_MS).unref();
 
-app.post("/api/contact", async (req, res) => {
+app.post("/contact", async (req, res) => {
   const ip = getClientIp(req);
   if (isRateLimited(ip)) {
     return res.status(429).json({ ok: false, error: "RATE_LIMIT" });
