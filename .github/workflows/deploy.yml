@@ -36,6 +36,8 @@ jobs:
           rsync -az --delete \
             --exclude=".git/" \
             --exclude=".github/" \
+            --exclude="server/node_modules/" \
+            --exclude="server/.env" \
             -e "ssh -p ${{ secrets.SERVER_PORT }}" \
             ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/Antoine-Developpement/
 
