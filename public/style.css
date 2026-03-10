@@ -674,8 +674,6 @@ section {
   font-family: var(--font-mono);
 }
 
-.pricing-note::before { content: "/* "; opacity: 0.6; }
-.pricing-note::after { content: " */"; opacity: 0.6; }
 
 /* ===========================
    PROJECTS
