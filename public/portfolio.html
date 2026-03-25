@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Portfolio | Antoine Développement</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+  <body>
+    <header class="site-header" id="top">
+      <nav class="navbar container" aria-label="Navigation principale">
+        <a class="brand" href="index.html#hero">
+          <img src="assets/logo.png" alt="Logo Antoine développement" />
+          <span>Antoine développement</span>
+        </a>
+
+        <div class="nav-menu" id="primary-nav">
+          <div class="nav-links">
+            <a href="index.html#qui-suis-je">À propos</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#realisations">Réalisations</a>
+            <a href="index.html#parcours-projet">Processus</a>
+          </div>
+          <div class="nav-actions">
+            <button
+              class="icon-btn theme-toggle"
+              type="button"
+              data-theme-toggle
+              aria-pressed="false"
+              aria-label="Mode sombre"
+            >🌙</button>
+            <a class="btn-contact" href="index.html#contact">Contact</a>
+          </div>
+        </div>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-controls="primary-nav"
+          aria-expanded="false"
+          aria-label="Ouvrir le menu"
+        >
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+        </button>
+      </nav>
+    </header>
+    <main class="portfolio-page">
+  <section class="portfolio-hero">
+    <p class="portfolio-subtitle">Mes réalisations web</p>
+    <h1>Une sélection de projets clients et personnels</h1>
+    <p class="portfolio-description">
+      Je regroupe ici les différents sites et projets web que j’ai pu réaliser,
+      pour des clients comme pour mes propres besoins.
+    </p>
+  </section>
+  <div class="portfolio-toolbar">
+    <div class="project-search">
+      <input
+        type="search"
+        id="portfolio-search"
+        class="project-search-input"
+        placeholder="Rechercher un projet"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+  <div class="portfolio-filters">
+  <button data-filter="all" class="active">Tous</button>
+  <button data-filter="online">En ligne</button>
+  <button data-filter="progress">En cours</button>
+</div>
+
+<section class="portfolio-grid" id="portfolio-grid"></section>
+<script src="portfolio.js"></script>
+</main>
+
+
+</body>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin | Gestion des projets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="admin-page">
+      <section class="portfolio-hero">
+        <p class="portfolio-subtitle">Administration</p>
+        <h1>Gerer les projets du portfolio</h1>
+        <p class="portfolio-description">
+          Ajoutez, modifiez ou supprimez les projets affiches sur le portfolio.
+        </p>
+      </section>
+
+      <section class="admin-form-wrapper">
+        <div class="section-header">
+          <div class="section-tag">Formulaire</div>
+          <h2 class="section-title" id="form-title">Ajouter un projet</h2>
+          <p class="section-subtitle" id="form-subtitle">
+            Remplissez les champs puis validez pour publier une nouvelle card.
+          </p>
+        </div>
+
+        <form id="project-form" class="contact-form">
+          <div class="form-grid">
+            <div class="field">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Nom du projet"
+                autocomplete="off"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <select id="status" name="status" required>
+                <option value="online">En ligne</option>
+                <option value="progress">En cours</option>
+              </select>
+            </div>
+
+            <div class="field field--full">
+              <textarea
+                id="description"
+                name="description"
+                rows="5"
+                placeholder="Description du projet"
+                required
+              ></textarea>
+            </div>
+
+            <div class="field field--full">
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+              />
+            </div>
+
+            <div class="field field--full">
+              <input
+                type="text"
+                id="url"
+                name="url"
+                placeholder="URL du projet (optionnel)"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <button id="submit-button" type="submit" class="form-submit">
+            Ajouter le projet
+          </button>
+          <p id="form-status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="admin-projects-wrapper">
+        <div class="section-header">
+          <div class="section-tag">Liste</div>
+          <h2 class="section-title">Projets existants</h2>
+        </div>
+
+        <div class="project-search">
+          <input
+            type="search"
+            id="admin-search"
+            class="project-search-input"
+            placeholder="Rechercher un projet"
+            autocomplete="off"
+          />
+        </div>
+
+        <div id="projects-list" class="portfolio-grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

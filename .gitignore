@@ -13,3 +13,19 @@ server/.env
 
 # Examples / backups
 *.example
+
+# Python
+__pycache__/
+*.pyc
+
+# SQLite
+*.db
+
+# Python env
+.venv/
+venv/
+
+backend/portfolio.db
+
+# Uploaded portfolio images
+public/assets/portfolio/
