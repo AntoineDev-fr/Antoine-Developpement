@@ -229,6 +229,37 @@ document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
   if (dict[key]) el.setAttribute("aria-label", dict[key]);
 });
 
+const heroProjectCount = document.getElementById("hero-project-count");
+
+const loadHeroProjectCount = async () => {
+  if (!heroProjectCount) return;
+
+  try {
+    const response = await fetch("/api/projects/count", {
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("PROJECT_COUNT_REQUEST_FAILED");
+    }
+
+    const payload = await response.json();
+    const count = Number(payload?.count);
+
+    if (!Number.isFinite(count) || count < 0) {
+      throw new Error("PROJECT_COUNT_INVALID");
+    }
+
+    heroProjectCount.textContent = String(count);
+  } catch (error) {
+    console.error("Erreur lors du chargement du nombre de projets:", error);
+  }
+};
+
+void loadHeroProjectCount();
+
 // ===========================
 // ANIMATIONS REVEAL
 // ===========================

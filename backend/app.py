@@ -86,6 +86,14 @@ def upload_image():
     return jsonify({"path": f"assets/portfolio/{unique_filename}"}), 201
 
 
+@app.route("/api/projects/count", methods=["GET"])
+def projects_count():
+    conn = get_connection()
+    result = conn.execute("SELECT COUNT(*) AS count FROM projects").fetchone()
+    conn.close()
+    return jsonify({"count": result["count"]})
+
+
 @app.route("/api/projects", methods=["GET", "POST", "PUT", "DELETE"])
 def projects():
     if request.method == "GET":
