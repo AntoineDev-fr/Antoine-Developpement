@@ -26,6 +26,9 @@ __pycache__/
 venv/
 
 backend/portfolio.db
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
 
 # Uploaded portfolio images
 public/assets/portfolio/
