@@ -13,7 +13,7 @@ CORS(app)
 BASE_DIR = Path(__file__).resolve().parent
 PUBLIC_DIR = BASE_DIR.parent / "public"
 UPLOAD_DIR = PUBLIC_DIR / "assets" / "portfolio"
-DATABASE = BASE_DIR / "portfolio.db"
+DATABASE = Path("/var/www/Antoine-Developpement-data/portfolio.db")
 ALLOWED_IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
 
 

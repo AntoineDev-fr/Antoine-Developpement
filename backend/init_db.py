@@ -1,7 +1,7 @@
 import sqlite3
 from pathlib import Path
 
-DATABASE = Path(__file__).resolve().parent / "portfolio.db"
+DATABASE = Path("/var/www/Antoine-Developpement-data/portfolio.db")
 
 conn = sqlite3.connect(DATABASE)
 cursor = conn.cursor()
