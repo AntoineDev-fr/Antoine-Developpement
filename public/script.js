@@ -42,18 +42,6 @@ if (header) {
 }
 
 // ===========================
-// THÈME (light = défaut, dark = [data-theme="dark"])
-// ===========================
-const themeToggle = document.querySelector("[data-theme-toggle]");
-const root = document.documentElement;
-const storedTheme = localStorage.getItem("theme");
-const initialTheme = storedTheme || "light";
-
-if (initialTheme === "dark") {
-  root.setAttribute("data-theme", "dark");
-}
-
-// ===========================
 // TRADUCTIONS (FR uniquement)
 // ===========================
 const dict = {
@@ -212,8 +200,6 @@ const dict = {
     "footer.legal": "Mentions légales",
     "footer.privacy": "Politique de confidentialité",
     "footer.copy": "© 2026 Antoine développement. Tous droits réservés.",
-    "theme.light": "Mode clair",
-    "theme.dark": "Mode sombre",
 };
 
 const translate = (key) => dict[key] || "";
@@ -242,33 +228,6 @@ document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
   const key = el.dataset.i18nAria;
   if (dict[key]) el.setAttribute("aria-label", dict[key]);
 });
-
-// ===========================
-// TOGGLE THÈME
-// ===========================
-const syncThemeBtn = () => {
-  if (!themeToggle) return;
-  const isDark = root.getAttribute("data-theme") === "dark";
-  themeToggle.textContent = isDark ? "☀️" : "🌙";
-  themeToggle.setAttribute("aria-label", isDark ? translate("theme.light") : translate("theme.dark"));
-  themeToggle.setAttribute("aria-pressed", String(isDark));
-};
-
-syncThemeBtn();
-
-if (themeToggle) {
-  themeToggle.addEventListener("click", () => {
-    const isDark = root.getAttribute("data-theme") === "dark";
-    if (isDark) {
-      root.removeAttribute("data-theme");
-      localStorage.setItem("theme", "light");
-    } else {
-      root.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-    }
-    syncThemeBtn();
-  });
-}
 
 // ===========================
 // ANIMATIONS REVEAL
