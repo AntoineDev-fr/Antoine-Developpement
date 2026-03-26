@@ -231,27 +231,51 @@ document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
 
 const heroProjectCount = document.getElementById("hero-project-count");
 
+const fetchProjectsCount = async () => {
+  const countResponse = await fetch("/api/projects/count", {
+    headers: {
+      Accept: "application/json",
+    },
+  });
+
+  if (countResponse.ok) {
+    const countPayload = await countResponse.json().catch(() => ({}));
+    const count = Number(countPayload?.count);
+
+    if (Number.isFinite(count) && count >= 0) {
+      return count;
+    }
+  }
+
+  const projectsResponse = await fetch("/api/projects", {
+    headers: {
+      Accept: "application/json",
+    },
+  });
+
+  if (!projectsResponse.ok) {
+    throw new Error("PROJECTS_REQUEST_FAILED");
+  }
+
+  const projectsPayload = await projectsResponse.json().catch(() => ({}));
+  const projects = Array.isArray(projectsPayload)
+    ? projectsPayload
+    : Array.isArray(projectsPayload?.projects)
+      ? projectsPayload.projects
+      : null;
+
+  if (!projects) {
+    throw new Error("PROJECTS_INVALID_PAYLOAD");
+  }
+
+  return projects.length;
+};
+
 const loadHeroProjectCount = async () => {
   if (!heroProjectCount) return;
 
   try {
-    const response = await fetch("/api/projects/count", {
-      headers: {
-        Accept: "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("PROJECT_COUNT_REQUEST_FAILED");
-    }
-
-    const payload = await response.json();
-    const count = Number(payload?.count);
-
-    if (!Number.isFinite(count) || count < 0) {
-      throw new Error("PROJECT_COUNT_INVALID");
-    }
-
+    const count = await fetchProjectsCount();
     heroProjectCount.textContent = String(count);
   } catch (error) {
     console.error("Erreur lors du chargement du nombre de projets:", error);
