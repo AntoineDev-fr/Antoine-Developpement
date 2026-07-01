@@ -2,6 +2,58 @@ const DEFAULT_IMAGE = "assets/logo.png";
 const PROJECTS_API_URL = "/api/projects";
 const UPLOAD_API_URL = "/api/upload";
 const SEARCH_DEBOUNCE_MS = 250;
+const ADMIN_TOKEN_KEY = "admin_token";
+
+const loginWrapper = document.getElementById("admin-login-wrapper");
+const adminContent = document.getElementById("admin-content");
+const loginForm = document.getElementById("admin-login-form");
+const loginTokenField = document.getElementById("admin-token");
+const loginStatus = document.getElementById("admin-login-status");
+
+function getToken() {
+  return sessionStorage.getItem(ADMIN_TOKEN_KEY) || "";
+}
+
+function setToken(token) {
+  sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
+}
+
+function clearToken() {
+  sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+}
+
+function authHeaders() {
+  const token = getToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
+function showAdmin() {
+  loginWrapper.hidden = true;
+  adminContent.hidden = false;
+}
+
+function showLogin(message = "") {
+  clearToken();
+  adminContent.hidden = true;
+  loginWrapper.hidden = false;
+  loginStatus.textContent = message;
+  loginStatus.style.color = message ? "#e5484d" : "";
+  loginTokenField.value = "";
+  loginTokenField.focus();
+}
+
+loginForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const token = loginTokenField.value.trim();
+
+  if (!token) {
+    return;
+  }
+
+  setToken(token);
+  showAdmin();
+  loadProjects();
+});
 
 const form = document.getElementById("project-form");
 const projectsList = document.getElementById("projects-list");
@@ -124,8 +176,15 @@ async function uploadImage(file) {
 
   const response = await fetch(UPLOAD_API_URL, {
     method: "POST",
+    headers: authHeaders(),
     body: formData,
   });
+
+  if (response.status === 401) {
+    showLogin("Session expiree, reconnectez-vous.");
+    throw new Error("Non autorise.");
+  }
+
   const payload = await readResponse(response);
 
   if (response.ok && payload.path) {
@@ -231,7 +290,14 @@ async function deleteProject(id) {
   try {
     const response = await fetch(`${PROJECTS_API_URL}?id=${encodeURIComponent(id)}`, {
       method: "DELETE",
+      headers: authHeaders(),
     });
+
+    if (response.status === 401) {
+      showLogin("Session expiree, reconnectez-vous.");
+      return;
+    }
+
     const payload = await readResponse(response);
 
     if (!response.ok) {
@@ -315,9 +381,18 @@ async function handleSubmit(event) {
       method,
       headers: {
         "Content-Type": "application/json",
+        ...authHeaders(),
       },
       body: JSON.stringify(body),
     });
+
+    if (response.status === 401) {
+      showLogin("Session expiree, reconnectez-vous.");
+      submitButton.disabled = false;
+      submitButton.textContent = idleLabel;
+      return;
+    }
+
     const payload = await readResponse(response);
 
     if (!response.ok) {
@@ -379,4 +454,10 @@ if (searchInput) {
 form.addEventListener("submit", handleSubmit);
 
 resetFormState();
-loadProjects();
+
+if (getToken()) {
+  showAdmin();
+  loadProjects();
+} else {
+  showLogin();
+}

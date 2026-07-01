@@ -1,11 +1,15 @@
 import os
+import secrets
 import sqlite3
 import uuid
 from pathlib import Path
 
+from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -15,6 +19,20 @@ PUBLIC_DIR = BASE_DIR.parent / "public"
 UPLOAD_DIR = PUBLIC_DIR / "assets" / "portfolio"
 DATABASE = Path("/var/www/Antoine-Developpement-data/portfolio.db")
 ALLOWED_IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
+ADMIN_TOKEN = os.environ.get("ADMIN_TOKEN")
+
+
+def is_authorized(req):
+    if not ADMIN_TOKEN:
+        return False
+
+    header = req.headers.get("Authorization", "")
+    provided = header[7:] if header.startswith("Bearer ") else ""
+    return bool(provided) and secrets.compare_digest(provided, ADMIN_TOKEN)
+
+
+def unauthorized_response():
+    return jsonify({"error": "Non autorise."}), 401
 
 
 def get_connection():
@@ -58,6 +76,9 @@ def remove_unused_image(conn, image_path):
 
 @app.route("/api/upload", methods=["POST"])
 def upload_image():
+    if not is_authorized(request):
+        return unauthorized_response()
+
     file = request.files.get("image")
 
     if file is None:
@@ -96,6 +117,9 @@ def projects_count():
 
 @app.route("/api/projects", methods=["GET", "POST", "PUT", "DELETE"])
 def projects():
+    if request.method != "GET" and not is_authorized(request):
+        return unauthorized_response()
+
     if request.method == "GET":
         search_term = (request.args.get("search") or "").strip()
         conn = get_connection()
@@ -225,4 +249,4 @@ def projects():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1")
