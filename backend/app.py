@@ -11,15 +11,20 @@ from werkzeug.utils import secure_filename
 
 load_dotenv()
 
-app = Flask(__name__)
-CORS(app)
-
 BASE_DIR = Path(__file__).resolve().parent
 PUBLIC_DIR = BASE_DIR.parent / "public"
 UPLOAD_DIR = PUBLIC_DIR / "assets" / "portfolio"
-DATABASE = Path("/var/www/Antoine-Developpement-data/portfolio.db")
+DATABASE = Path(os.environ.get("DATABASE_PATH", BASE_DIR / "portfolio.db"))
 ALLOWED_IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
 ADMIN_TOKEN = os.environ.get("ADMIN_TOKEN")
+CORS_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get("CORS_ORIGINS", "").split(",")
+    if origin.strip()
+]
+
+app = Flask(__name__)
+CORS(app, origins=CORS_ORIGINS)
 
 
 def is_authorized(req):

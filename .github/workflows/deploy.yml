@@ -42,6 +42,15 @@ jobs:
             -e "ssh -p ${{ secrets.SERVER_PORT }}" \
             ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/Antoine-Developpement/
 
+      - name: Restart app services
+        # continue-on-error: le sudoers doit whitelister "systemctl restart contact-api portfolio-api"
+        # pour ce user (voir server/contact-api.service et backend/portfolio-api.service).
+        # Tant que ce n'est pas fait sur le VPS, cette etape echoue sans bloquer le reload nginx.
+        continue-on-error: true
+        run: |
+          ssh -p "${{ secrets.SERVER_PORT }}" "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" \
+            "sudo -n systemctl restart contact-api portfolio-api"
+
       - name: Reload nginx
         run: |
           ssh -p "${{ secrets.SERVER_PORT }}" "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" \

@@ -1,7 +1,10 @@
 # Node
 server/node_modules/
-server/.env
+
+# Environment files (secrets) — never commit, except .env.example templates
 .env
+.env.*
+!.env.example
 
 # Logs
 *.log
@@ -10,9 +13,6 @@ server/.env
 .DS_Store
 .vscode/
 .idea/
-
-# Examples / backups
-*.example
 
 # Python
 __pycache__/

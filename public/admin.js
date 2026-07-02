@@ -166,6 +166,9 @@ async function readResponse(response) {
   try {
     return JSON.parse(rawText);
   } catch {
+    if (rawText.trim().startsWith("<")) {
+      return { error: "Erreur serveur inattendue." };
+    }
     return { message: rawText };
   }
 }
