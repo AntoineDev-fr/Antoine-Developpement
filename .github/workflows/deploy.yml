@@ -31,14 +31,17 @@ jobs:
           ssh -p "${{ secrets.SERVER_PORT }}" "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" \
             "whoami && hostname && ls -la /var/www/Antoine-Developpement"
 
-      - name: Deploy with rsync
+            - name: Deploy with rsync
         run: |
-          rsync -az --delete \
+          rsync -rlptz --delete \
             --exclude=".git/" \
             --exclude=".github/" \
             --exclude="server/node_modules/" \
             --exclude="server/.env" \
             --exclude="backend/.env" \
+            --exclude="backend/.venv/" \
+            --exclude="__pycache__/" \
+            --exclude="public/assets/portfolio/" \
             -e "ssh -p ${{ secrets.SERVER_PORT }}" \
             ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/Antoine-Developpement/
 
