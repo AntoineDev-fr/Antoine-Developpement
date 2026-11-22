@@ -10,6 +10,7 @@ app.disable("x-powered-by");
 app.set("trust proxy", true);
 
 const PORT = Number(process.env.PORT || 3000);
+const HOST = process.env.HOST || "127.0.0.1";
 const isProd = process.env.NODE_ENV === "production";
 const RATE_LIMIT_WINDOW_MS = Number(process.env.RATE_LIMIT_WINDOW_MS || 10 * 60 * 1000);
 const RATE_LIMIT_MAX = Number(process.env.RATE_LIMIT_MAX || 5);
@@ -197,6 +198,6 @@ app.post(["/contact", "/api/contact"], async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Contact API listening on port ${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Contact API listening on ${HOST}:${PORT}`);
 });
